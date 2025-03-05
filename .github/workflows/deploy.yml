@@ -9,8 +9,8 @@ env:
 jobs:
   test:
     env:
-        MONGODB_USERNAME: admin
-        MONDODB_PASSWORD: admin
+        MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+        MONDODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
         MONGODB_CLUSTER_ADDRESS: cluster0.lrdul.mongodb.net
         PORT: 808O
     environment: testing
@@ -25,17 +25,18 @@ jobs:
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
-      - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT
+    #   - name: Run server
+    #     run: npm start & npx wait-on http://127.0.0.1:$PORT
       - name: Run tests
         run: npm test
       - name: Output information
-        run: echo "monGO username ->  ${{ env.MONGODB_USERNAME }}"
+        run: |        
+            echo "monGO pass ->  ${{ env.MONDODB_PASSWORD }}"
+            echo "monGO name -> ${{ env.MONGODB_USERNAME }}"
   deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Output information
         run: |        
-          echo "monGO username ->  ${{ env.MONGO_USERNAME }}"
           echo "monGO name ->  $MONGODB_DB_NAME "
