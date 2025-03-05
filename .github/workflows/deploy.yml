@@ -28,7 +28,7 @@ jobs:
     #   - name: Run server
     #     run: npm start & npx wait-on http://127.0.0.1:$PORT
       - name: Run tests
-        run: npm test
+        run: npm run tests
       - name: Output information
         run: |        
             echo "monGO pass ->  ${{ env.MONDODB_PASSWORD }}"
